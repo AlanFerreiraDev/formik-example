@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
+import schema from "./schema";
 
 import "./App.css";
 
@@ -8,23 +9,26 @@ function App() {
     console.log("SUBMIT", values);
   }
 
-  function validate(values) {
-    const errors = {};
-    if (!values.name) {
-      errors.name = "Nome é Obrigatório";
-    }
+  // * Validação Simples, sem YUP
+  // function validate(values) {
+  //   const errors = {};
 
-    if (!values.email) {
-      errors.email = "Email é Obrigatório";
-    }
+  //   if (!values.name) {
+  //     errors.name = "Nome é Obrigatório";
+  //   }
+  //   if (!values.email) {
+  //     errors.email = "Email é Obrigatório";
+  //   }
 
-    return errors;
-  }
+  //   return errors;
+  // }
 
   return (
     <div className="App">
       <Formik
-        validate={validate}
+        validateOnMount // Para validar no momento que monta o componente
+        //validate={validate}
+        validationSchema={schema}
         onSubmit={onSubmit}
         initialValues={{
           name: "",
