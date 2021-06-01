@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import schema from "./schema";
 
 import "./App.css";
@@ -34,21 +34,26 @@ function App() {
           name: "",
           email: "",
         }}
-        render={({ values, errors }) => (
+        // touched é para quando o campo foi tocado, mesmo com validateOnMount
+        render={({ values, errors, touched, isValid }) => (
           // Assim não precisomais passar o handleSubmit no Form
           <Form>
             <div>
               <label>Nome: </label>
               {/* Com o Field eu não preciso mais passar value, e nem o onChange */}
               <Field name="name" type="text" />
-              {errors.name && <span>{errors.name}</span>}
+              <ErrorMessage name="name" />
+              {/* {errors.name && touched.name && <span>{errors.name}</span>} */}
             </div>
             <div>
               <label>Email: </label>
               <Field name="email" type="email" />
-              {errors.email && <span>{errors.email}</span>}
+              <ErrorMessage name="email" />
+              {/* {errors.email && touched.email && <span>{errors.email}</span>} */}
             </div>
-            <button type="submit">Enviar</button>
+            <button type="submit" disabled={!isValid}>
+              Enviar
+            </button>
           </Form>
         )}
       />
